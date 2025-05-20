@@ -1,0 +1,17 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.so
+
+# MacOS
+.DS_Store
+
+# Environment variables
+.env
+
+# Python virtual environments
+venv/
+ENV/
+
+# Build artifacts
+build/
