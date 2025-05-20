@@ -6,8 +6,6 @@ SwiftGenie is an experimental platform for generating iOS applications from chat
 
 This repository contains a minimal proof-of-concept with a Python-based API server. The server relies on OpenAI's API to produce Swift code snippets in response to user prompts. A placeholder build script is provided for compiling the generated project using Xcode.
 
-The project targets **openai>=1.0** and uses the asynchronous client interface.
-
 ### Components
 
 - **server/** – FastAPI application exposing a `/generate` endpoint to transform chat prompts into Swift code via the OpenAI API.
@@ -16,7 +14,7 @@ The project targets **openai>=1.0** and uses the asynchronous client interface.
 
 ### Running the API
 
-1. Install Python dependencies using the provided setup script:
+1. Install Python dependencies (requires internet access):
    ```bash
    ./scripts/setup.sh
    ```
@@ -31,10 +29,10 @@ The project targets **openai>=1.0** and uses the asynchronous client interface.
 
 ### Running tests
 
-After installing the dependencies you can run the small test suite with:
+After installing dependencies, run the unit tests with:
 
 ```bash
-pytest -q
+pytest
 ```
 
 ### Building iOS projects
