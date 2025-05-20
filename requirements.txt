@@ -3,5 +3,4 @@ uvicorn==0.29.0
 openai==1.9.0
 pydantic==2.5.2
 httpx==0.24.1
-pytest
-requests
+pytest==7.4.4

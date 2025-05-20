@@ -1,25 +1,20 @@
-import os
-import types
+import pytest
 from fastapi.testclient import TestClient
-
-# Ensure API key for import
-os.environ.setdefault("OPENAI_API_KEY", "test")
+from unittest.mock import AsyncMock, patch
 
 from server.main import app, client
 
-# Patch the OpenAI client to avoid real API calls
-async def fake_create(*args, **kwargs):
-    class FakeResp:
-        choices = [types.SimpleNamespace(message=types.SimpleNamespace(content="print('hello')"))]
-    return FakeResp()
+client_app = TestClient(app)
 
-client.chat.completions.create = fake_create
+@pytest.mark.asyncio
+async def test_generate_endpoint():
+    mock_resp = AsyncMock()
+    mock_resp.choices = [type('obj', (object,), {'message': type('m', (object,), {'content': 'swift code'})()})]
 
+    async def fake_create(*args, **kwargs):
+        return mock_resp
 
-def test_generate_endpoint():
-    test_client = TestClient(app)
-    resp = test_client.post("/generate", json={"message": "test"})
-    assert resp.status_code == 200
-    data = resp.json()
-    assert "code" in data
-    assert data["code"].startswith("print")
+    with patch.object(client.chat.completions, 'create', new=AsyncMock(side_effect=fake_create)):
+        response = client_app.post('/generate', json={'message': 'hello'})
+        assert response.status_code == 200
+        assert response.json() == {'code': 'swift code'}

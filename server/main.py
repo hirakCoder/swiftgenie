@@ -11,7 +11,6 @@ class Prompt(BaseModel):
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise RuntimeError("OPENAI_API_KEY is not set")
-
 client = AsyncOpenAI(api_key=OPENAI_API_KEY)
 
 @app.post("/generate")
