@@ -7,4 +7,5 @@ if [ ! -d "$PROJECT_DIR" ]; then
   exit 1
 fi
 # This command assumes a macOS environment with Xcode installed
-xcodebuild -project "$PROJECT_DIR" -scheme "$PROJECT_DIR" -sdk iphonesimulator -configuration Debug build
+xcodebuild -project "$PROJECT_DIR" -scheme "$PROJECT_DIR" \
+  -sdk iphonesimulator -configuration Debug build

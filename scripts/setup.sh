@@ -1,6 +1,6 @@
 #!/bin/bash
-# Install Python dependencies for SwiftGenie
-set -euo pipefail
+# Install project dependencies
+set -e
 
 if [ ! -f requirements.txt ]; then
   echo "requirements.txt not found" >&2
