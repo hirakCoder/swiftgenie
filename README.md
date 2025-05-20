@@ -10,8 +10,7 @@ This repository contains a minimal proof-of-concept with a Python-based API serv
 
 - **server/** – FastAPI application exposing a `/generate` endpoint to transform chat prompts into Swift code via the OpenAI API.
 - **scripts/build.sh** – Example shell script to run `xcodebuild` on macOS. Requires Xcode command-line tools.
-- **requirements.txt** – Python dependencies for the API server. The
-  `httpx` version is pinned for compatibility with the OpenAI client.
+- **requirements.txt** – Python dependencies for the API server.
 
 ### Running the API
 
@@ -19,19 +18,24 @@ This repository contains a minimal proof-of-concept with a Python-based API serv
    ```bash
    pip install -r requirements.txt
    ```
-2. Set your OpenAI API key and optional model name:
+2. Set your OpenAI API key and (optionally) the model name:
    ```bash
    export OPENAI_API_KEY=your-key
-   export OPENAI_MODEL=gpt-3.5-turbo  # optional, defaults to gpt-4
+   export OPENAI_MODEL=gpt-3.5-turbo  # defaults to gpt-4
    ```
 3. Launch the server:
    ```bash
    uvicorn server.main:app --reload
    ```
-4. Run tests (after installing dependencies):
-   ```bash
-   pytest
-   ```
+
+### Running tests
+
+Install the dev dependencies and run pytest:
+
+```bash
+pip install -r requirements.txt
+pytest -q
+```
 
 ### Building iOS projects
 

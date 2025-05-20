@@ -14,6 +14,7 @@ if not OPENAI_API_KEY:
 
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4")
 
+# Instantiate the asynchronous OpenAI client
 client = AsyncOpenAI(api_key=OPENAI_API_KEY)
 
 @app.post("/generate")

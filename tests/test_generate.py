@@ -1,19 +1,15 @@
-import pytest
 from fastapi.testclient import TestClient
-from server.main import app, client as openai_client
+from server.main import app, client
+from types import SimpleNamespace
+from unittest.mock import AsyncMock
 
-class DummyResponse:
-    def __init__(self, content):
-        self.choices = [type('Choice', (), {'message': type('Msg', (), {'content': content})})()]
 
-def test_generate(monkeypatch):
-    test_client = TestClient(app)
+def test_generate_endpoint(monkeypatch):
+    dummy_resp = SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content="Hello"))])
+    monkeypatch.setattr(client.chat.completions, "create", AsyncMock(return_value=dummy_resp))
 
-    async def fake_create(**kwargs):
-        return DummyResponse("// swift code")
+    with TestClient(app) as test_client:
+        response = test_client.post("/generate", json={"message": "hi"})
 
-    monkeypatch.setattr(openai_client.chat.completions, 'create', fake_create)
-
-    response = test_client.post('/generate', json={'message': 'hi'})
     assert response.status_code == 200
-    assert 'code' in response.json()
+    assert response.json() == {"code": "Hello"}
