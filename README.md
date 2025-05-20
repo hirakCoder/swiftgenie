@@ -11,6 +11,7 @@ This repository contains a minimal proof-of-concept with a Python-based API serv
 - **server/** – FastAPI application exposing a `/generate` endpoint to transform chat prompts into Swift code via the OpenAI API.
 - **scripts/build.sh** – Example shell script to run `xcodebuild` on macOS. Requires Xcode command-line tools.
 - **requirements.txt** – Python dependencies for the API server.
+- Jinja2 templates power the optional web UI and are included in `requirements.txt`.
 
 ### Running the API
 
