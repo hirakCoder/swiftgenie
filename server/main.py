@@ -11,6 +11,9 @@ class Prompt(BaseModel):
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise RuntimeError("OPENAI_API_KEY is not set")
+
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4")
+
 client = AsyncOpenAI(api_key=OPENAI_API_KEY)
 
 @app.post("/generate")
@@ -18,7 +21,7 @@ async def generate(prompt: Prompt):
     """Generate Swift code from a user prompt."""
     try:
         response = await client.chat.completions.create(
-            model="gpt-4",
+            model=OPENAI_MODEL,
             messages=[{"role": "user", "content": prompt.message}],
         )
         code = response.choices[0].message.content
